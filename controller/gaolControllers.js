@@ -1,4 +1,4 @@
-const goalsModal = require("../models/Goal");
+const goalsModel = require("../models/Goal");
 // Controller for creating a new Goal this is Post Request
 // post is your grtting from req.body
 // put is to clear somethings and addind a new one while to patch is just to remove a world or alphabet
