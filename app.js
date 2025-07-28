@@ -9,8 +9,11 @@ const app = express();
 
 // define the port
 const port = process.env.PORT || 4000;
+// cors
+app.use(cors({ origin: "*" }));
 // middleware
 app.use(express.json());
+
 // Routes MiddleWare
 app.use("/api/goals", goalRoutes);
 

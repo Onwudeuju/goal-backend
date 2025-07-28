@@ -5,7 +5,7 @@ const goalsModal = require("../models/Goal");
 const newGoal = async (req, res) => {
   try {
     const { title, description, progress } = req.body;
-    const goal = await goalsModal.create({ title, description, progress });
+    const goal = await goalsModel.create({ title, description, progress });
     res.status(201).json(goal);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -14,7 +14,7 @@ const newGoal = async (req, res) => {
 // Controller to get all existing goals that has been created
 const getAllGoals = async (req, res) => {
   try {
-    const goals = await goalsModal.find();
+    const goals = await goalsModel.find();
     res.status(200).json(goals);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -24,7 +24,7 @@ const getAllGoals = async (req, res) => {
 // request and response
 const eachGoal = async (req, res) => {
   try {
-    const goal = await goalsModal.findById(req.params.id);
+    const goal = await goalsModel.findById(req.params.id);
     if (!goal) {
       return res.status(400).json({ message: "Goal not Found" });
     }
@@ -36,7 +36,7 @@ const eachGoal = async (req, res) => {
 // Controller to get "AllonGoingGoal" the condition is progress has to be less than 100............"lt" means less tahn
 const onGoingGoals = async (req, res) => {
   try {
-    const goals = await goalsModal.find({ progress: { $lt: 100 } });
+    const goals = await goalsModel.find({ progress: { $lt: 100 } });
     console.log("Ongoing goals retrieved", goals);
     res.status(200).json(goals);
   } catch (err) {
@@ -46,7 +46,7 @@ const onGoingGoals = async (req, res) => {
 // Controller to get all completed Goals the condition is progess has to be strictly equal "===" to 100
 const completeGoals = async (req, res) => {
   try {
-    const goals = await goalsModal.find({ progress: 100 });
+    const goals = await goalsModel.find({ progress: 100 });
     console.log("Completed goals retrieved:", goals);
     res.status(200).json(goals);
   } catch (err) {
@@ -61,7 +61,7 @@ const updateProgress = async (req, res) => {
     if (progress === undefined) {
       return res.status(400).json({ error: "Progrss Value is required" });
     }
-    const progressUpdate = await goalsModal.findByIdAndUpdate(
+    const progressUpdate = await goalsModel.findByIdAndUpdate(
       req.params.id,
       { progress },
       { new: true }
@@ -72,13 +72,13 @@ const updateProgress = async (req, res) => {
     }
     res.status(200).json(progressUpdate);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(404).json({ error: err.message });
   }
 };
 // controller for deleting goal by Id
 const deleteGoal = async (req, res) => {
   try {
-    const deletedGoal = await goalsModal.findByIdAndDelete(req.params.id);
+    const deletedGoal = await goalsModel.findByIdAndDelete(req.params.id);
     if (!deletedGoal) {
       return res.status(404).json({ error: "Goal not Found" });
     }
