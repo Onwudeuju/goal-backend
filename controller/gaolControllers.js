@@ -50,7 +50,7 @@ const completeGoals = async (req, res) => {
     console.log("Completed goals retrieved:", goals);
     res.status(200).json(goals);
   } catch (err) {
-    res.satus(400).json({ error: err.message });
+    res.status(400).json({ error: err.message });
   }
 };
 // Controller to udpdate/patch progess of a Goal
